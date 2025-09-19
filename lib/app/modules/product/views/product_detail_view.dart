@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:nano_shop/app/modules/product/controllers/cart_controller.dart';
 import 'package:nano_shop/app/modules/product/models/product_model.dart';
 
-class ProductDetailView extends StatelessWidget{
+class ProductDetailView extends StatelessWidget {
   const ProductDetailView({super.key});
 
   @override
@@ -14,13 +14,13 @@ class ProductDetailView extends StatelessWidget{
     return Scaffold(
       appBar: AppBar(
         title: Text(product.title),
-        actions: [  
+        actions: [
           IconButton(
             icon: const Icon(Icons.shopping_cart),
             onPressed: () {
               Get.toNamed('/cart');
             },
-          )
+          ),
         ],
       ),
       body: Padding(
@@ -28,11 +28,10 @@ class ProductDetailView extends StatelessWidget{
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(product.title,
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),),
+            Text(
+              product.title,
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 30),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.2,
@@ -40,53 +39,58 @@ class ProductDetailView extends StatelessWidget{
             ),
             const SizedBox(height: 30),
             Row(
-                children: [
-                  Icon( Icons.star, color: Colors.amber, size: 22),
-                  Text('${product.rating}(${product.ratingCount.toString()})'
-                  , style: TextStyle(
-                    fontSize: 22,
-                  ),),
-                  Spacer(),
-                  Text('\$${product.price}',
+              children: [
+                Icon(Icons.star, color: Colors.amber, size: 22),
+                Text(
+                  '${product.rating}(${product.ratingCount.toString()})',
+                  style: TextStyle(fontSize: 22),
+                ),
+                Spacer(),
+                Text(
+                  '\$${product.price}',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 30,
                     color: Colors.green,
                   ),
                   textAlign: TextAlign.end,
-                  ),
-                ],
-              ),
+                ),
+              ],
+            ),
             const SizedBox(height: 16),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.25,
               child: SingleChildScrollView(
-                child: Text(product.description,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22,
-                        color: const Color.fromARGB(255, 36, 36, 37),
-                      ),
-                      ),
+                child: Text(
+                  product.description,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                    color: const Color.fromARGB(255, 36, 36, 37),
+                  ),
+                ),
               ),
             ),
-                  Spacer(),
+            Spacer(),
             Row(
               children: [
-                 Spacer(),
+                Spacer(),
                 ElevatedButton(
                   onPressed: () {
                     cartController.addToCart(product);
-                    Get.snackbar('success'.tr, 'Product_added_to_cart'.tr,
-                        snackPosition: SnackPosition.TOP,
-                        backgroundColor: const Color.fromARGB(255, 28, 218, 161)
-                        );
+                    Get.snackbar(
+                      'success'.tr,
+                      'product_added_to_cart'.tr,
+                      snackPosition: SnackPosition.TOP,
+                      backgroundColor: const Color.fromARGB(255, 28, 218, 161),
+                    );
                   },
                   child: Text('add_to_cart'.tr),
                 ),
                 Spacer(),
-                ElevatedButton(onPressed: (){
-                    Get.bottomSheet(  
+                ElevatedButton(
+                  onPressed: () {
+                    Get.bottomSheet(
                       Container(
                         color: Colors.white,
                         child: Wrap(
@@ -95,7 +99,7 @@ class ProductDetailView extends StatelessWidget{
                               leading: const Icon(Icons.info),
                               title: Text('add_to_cart'.tr),
                               onTap: () {
-                               cartController.addToCart(product);
+                                cartController.addToCart(product);
                                 Get.back();
                               },
                             ),
@@ -103,16 +107,18 @@ class ProductDetailView extends StatelessWidget{
                               leading: const Icon(Icons.info),
                               title: Text('proceed_to_checkout'.tr),
                               onTap: () {
-                               cartController.addToCart(product);
+                                cartController.addToCart(product);
                                 Get.toNamed('/checkout');
                               },
                             ),
                           ],
                         ),
-                      )
+                      ),
                     );
-                }, child: Text('more_options'.tr)),
-               Spacer(),
+                  },
+                  child: Text('more_options'.tr),
+                ),
+                Spacer(),
               ],
             ),
             Spacer(),
@@ -120,7 +126,5 @@ class ProductDetailView extends StatelessWidget{
         ),
       ),
     );
-
-
   }
 }

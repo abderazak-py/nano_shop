@@ -17,7 +17,14 @@ class ProductController extends GetxController {
     super.onInit();
     fetchProductsByCategory(selectedCategory.value);
   }
-  List<String> categories = ['all', 'electronics', 'jewel', 'men\'s clothing', 'women\'s clothing'];
+
+  List<String> categories = [
+    'all',
+    'electronics',
+    'jewel',
+    'men\'s clothing',
+    'women\'s clothing',
+  ];
 
   var selectedCategory = 'all'.obs;
   void fetchProductsByCategory(String category) async {
@@ -28,17 +35,18 @@ class ProductController extends GetxController {
       if (category == 'all') {
         fetchedProducts = await productService.fetchProducts();
       } else {
-        fetchedProducts = await productService.fetchProductsByCategory(category);
+        fetchedProducts = await productService.fetchProductsByCategory(
+          category,
+        );
       }
       productList.value = fetchedProducts;
     } catch (e) {
       if (kDebugMode) {
         print('Error fetching products by category: $e');
       }
-      errorMessage.value = 'Failed to load products. Please try again.';
+      errorMessage.value = 'failed_to_load'.tr;
     } finally {
       isLoading.value = false;
     }
   }
-
 }

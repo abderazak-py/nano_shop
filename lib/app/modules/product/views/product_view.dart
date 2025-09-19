@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nano_shop/app/modules/product/controllers/product_controller.dart';
-import 'package:nano_shop/app/services/theme_service.dart';
+import 'package:nano_shop/app/modules/product/controllers/theme_controller.dart';
+import 'package:nano_shop/app/modules/product/views/widgets/product_card.dart';
 
 class ProductView extends StatelessWidget {
-  final ProductController controller = Get.find<ProductController>();
+  final ProductController productController = Get.find<ProductController>();
+  final ThemeController themeController = Get.find<ThemeController>();
 
   ProductView({super.key});
 
@@ -13,91 +15,108 @@ class ProductView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Obx(() {
-            return DropdownButton<String>(
-            value: controller.selectedCategory.value,
+          return DropdownButton<String>(
+            value: productController.selectedCategory.value,
             alignment: Alignment.center,
-            items: controller.categories
-              .map((category) => DropdownMenuItem<String>(
-                  alignment: AlignmentGeometry.center,
-                  value: category,
-                  child: Text(category.tr), // Enable translation
-                ))
-              .toList(),
+            items: productController.categories
+                .map(
+                  (category) => DropdownMenuItem<String>(
+                    alignment: AlignmentGeometry.center,
+                    value: category,
+                    child: Text(category.tr),
+                  ),
+                )
+                .toList(),
             onChanged: (value) {
               if (value != null) {
-              controller.selectedCategory.value = value;
-              controller.fetchProductsByCategory(value);
+                productController.selectedCategory.value = value;
+                productController.fetchProductsByCategory(value);
               }
             },
             underline: SizedBox(),
             icon: Icon(Icons.arrow_drop_down, color: Colors.black87),
-            );
+          );
         }),
         centerTitle: true,
         actions: [
-          IconButton(
-            onPressed: () {
-              if (Get.locale == Locale('en', 'US')) {
-                Get.updateLocale(Locale('es', 'ES'));
-              } else if (Get.locale == Locale('es', 'ES')) {
-                Get.updateLocale(Locale('ar', 'AR'));
-              } else {
-                Get.updateLocale(Locale('en', 'US'));
-              }
+          GetBuilder<ThemeController>(
+            builder: (_) {
+              return PopupMenuButton<String>(
+                tooltip: 'language'.tr,
+                icon: Icon(Icons.language),
+                onSelected: (String value) {
+                  switch (value) {
+                    case 'ar':
+                      Get.updateLocale(Locale('ar', 'AR'));
+                      break;
+                    case 'zh':
+                      Get.updateLocale(Locale('zh', 'CN'));
+                      break;
+                    case 'en':
+                      Get.updateLocale(Locale('en', 'US'));
+                      break;
+                    case 'fr':
+                      Get.updateLocale(Locale('fr', 'FR'));
+                      break;
+                    case 'de':
+                      Get.updateLocale(Locale('de', 'DE'));
+                      break;
+                    case 'hi':
+                      Get.updateLocale(Locale('hi', 'IN'));
+                      break;
+                    case 'ja':
+                      Get.updateLocale(Locale('ja', 'JP'));
+                      break;
+                    case 'pt':
+                      Get.updateLocale(Locale('pt', 'PT'));
+                      break;
+                    case 'es':
+                      Get.updateLocale(Locale('es', 'ES'));
+                      break;
+                  }
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                  PopupMenuItem<String>(value: 'ar', child: Text('arabic')),
+                  PopupMenuItem<String>(value: 'en', child: Text('english')),
+                  PopupMenuItem<String>(value: 'zh', child: Text('chinese')),
+                  PopupMenuItem<String>(value: 'fr', child: Text('french')),
+                  PopupMenuItem<String>(value: 'de', child: Text('german')),
+                  PopupMenuItem<String>(value: 'hi', child: Text('hindi')),
+                  PopupMenuItem<String>(value: 'ja', child: Text('japanese')),
+                  PopupMenuItem<String>(value: 'pt', child: Text('portuguese')),
+                  PopupMenuItem<String>(value: 'es', child: Text('spanish')),
+                ],
+              );
             },
-            icon: Icon(Icons.language),
           ),
-
-          IconButton(
-            onPressed: () {
-              ThemeService().switchTheme();
+          GetBuilder<ThemeController>(
+            builder: (_) {
+              return IconButton(
+                onPressed: () {
+                  themeController.changeThemeMode();
+                },
+                icon: themeController.isDarkMode()
+                    ? Icon(Icons.light_mode)
+                    : Icon(Icons.dark_mode),
+              );
             },
-            icon: Icon(Icons.brightness_7_outlined),
           ),
         ],
       ),
       body: Obx(() {
-        if (controller.isLoading.value) {
+        if (productController.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
-        if (controller.errorMessage.isNotEmpty) {
-          return Center(child: Text('Error: ${controller.errorMessage}'));
+        if (productController.errorMessage.isNotEmpty) {
+          return Center(
+            child: Text('${'error'.tr}: ${productController.errorMessage}'),
+          ); //
         }
         return ListView.builder(
-          itemCount: controller.productList.length,
+          itemCount: productController.productList.length,
           itemBuilder: (context, index) {
-            final product = controller.productList[index];
-            return ListTile(
-              title: Column(
-                children: [
-                  Text(product.title),
-                  SizedBox(
-                    height: 100,
-                    child: Image.network(product.image),
-                  ),
-                ],
-              ),
-              subtitle: Row(
-                children: [
-                  Icon( Icons.star, color: Colors.amber, size: 16),
-                  Text(product.rating.toString()),
-                  SizedBox(width: 10),
-                  Text('(${product.ratingCount.toString()})'),
-                  Spacer(),
-                  Text('\$${product.price}',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.green,
-                  ),
-                  textAlign: TextAlign.end,
-                  ),
-                ],
-              ),
-              onTap: () {
-                Get.toNamed('/product-details', arguments: product);
-              },
-            );
+            final product = productController.productList[index];
+            return ProductCard(product: product);
           },
         );
       }),

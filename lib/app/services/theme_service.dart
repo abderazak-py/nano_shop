@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:get_storage/get_storage.dart';
 
 class ThemeService {
-  bool _loadThemeFromStorage() => Get.isDarkMode;
+  final _box = GetStorage();
+  final _key = 'isDarkMode';
 
-  void _saveThemeToStorage(bool isDarkMode) =>
-      Get.changeThemeMode(isDarkMode ? ThemeMode.dark : ThemeMode.light);
+  bool loadThemeFromBox() => _box.read(_key) ?? false;
 
-  ThemeMode get theme =>
-      _loadThemeFromStorage() ? ThemeMode.dark : ThemeMode.light;
+  void _saveThemeToBox(bool isDarkMode) => _box.write(_key, isDarkMode);
+
+  ThemeMode get theme => loadThemeFromBox() ? ThemeMode.dark : ThemeMode.light;
 
   void switchTheme() {
-    Get.changeThemeMode(Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
-    _saveThemeToStorage(!Get.isDarkMode);
+    bool currentIsDarkMode = loadThemeFromBox();
+    // Switch to opposite theme
+    bool newIsDarkMode = !currentIsDarkMode;
+
+    // Apply theme change
+    Get.changeThemeMode(newIsDarkMode ? ThemeMode.dark : ThemeMode.light);
+
+    // Save new state
+    _saveThemeToBox(newIsDarkMode);
   }
 }
