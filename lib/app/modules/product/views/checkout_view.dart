@@ -27,7 +27,7 @@ class CheckoutView extends StatelessWidget {
               cartController.clearCart();
               Get.snackbar(
                 'success'.tr,
-                'order_done'.tr,
+                'order_placed_successfully'.tr,
                 snackPosition: SnackPosition.TOP,
                 backgroundColor: const Color.fromARGB(255, 4, 238, 121),
                 duration: const Duration(seconds: 2),

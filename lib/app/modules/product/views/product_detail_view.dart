@@ -63,11 +63,7 @@ class ProductDetailView extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Text(
                   product.description,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22,
-                    color: const Color.fromARGB(255, 36, 36, 37),
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
                 ),
               ),
             ),
