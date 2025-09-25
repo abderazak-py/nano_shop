@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nano_shop/app/modules/product/controllers/cart_controller.dart';
@@ -83,7 +84,11 @@ class ProductCard extends StatelessWidget {
           Positioned(
             right: 32,
             top: -60,
-            child: Image.network(product.image, height: 100, width: 100),
+            child: CachedNetworkImage(
+              imageUrl: product.image,
+              height: 100,
+              width: 100,
+            ),
           ),
         ],
       ),

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nano_shop/app/modules/product/controllers/cart_controller.dart';
@@ -35,7 +36,7 @@ class ProductDetailView extends StatelessWidget {
             const SizedBox(height: 30),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.2,
-              child: Image.network(product.image),
+              child: CachedNetworkImage(imageUrl: product.image),
             ),
             const SizedBox(height: 30),
             Row(
