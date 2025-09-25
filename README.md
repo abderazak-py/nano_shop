@@ -29,7 +29,7 @@ A modern e-commerce mobile application built with Flutter. This project showcase
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-username/nano_shop.git
+    git clone https://github.com/abderazak-py/nano_shop.git
 cd nano_shop 
 Install dependencies:
 dart
@@ -97,11 +97,3 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 📞 Support
 If you have any questions or need help, open an issue in your repository!
-
----
-
-*Note: Please ensure to replace placeholder references with actual information:*  
-1. Update the repository URL `https://github.com/your-username/nano_shop.git` with your correct GitHub URL  
-2. Add a proper LICENSE file if needed 
-3. Adjust features and tech stack sections to match actual implementation
-4. Replace any placeholder text in filenames (e.g., replace `pub.dev/packages/get` with the correct direct link for GetX)
