@@ -1,5 +1,6 @@
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
+import 'package:nano_shop/app/modules/product/controllers/cart_controller.dart';
 import 'package:nano_shop/app/modules/product/controllers/language_controller.dart';
 import 'package:nano_shop/app/modules/product/controllers/product_controller.dart';
 import 'package:nano_shop/app/modules/product/controllers/theme_controller.dart';
@@ -16,5 +17,6 @@ class ProductBinding extends Bindings {
     );
     Get.lazyPut<ThemeController>(() => ThemeController());
     Get.lazyPut<LanguageController>(() => LanguageController());
+    Get.lazyPut<CartController>(() => CartController());
   }
 }

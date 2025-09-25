@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:nano_shop/app/binding/cart_binding.dart';
 import 'package:nano_shop/app/binding/product_binding.dart';
 import 'package:nano_shop/app/modules/product/views/cart_view.dart';
 import 'package:nano_shop/app/modules/product/views/checkout_view.dart';
@@ -15,21 +14,9 @@ class AppPages {
       page: () => ProductView(),
       binding: ProductBinding(),
     ),
-    GetPage(
-      name: Routes.productDetails,
-      page: () => ProductDetailView(),
-      binding:CartBinding(),
-    ),
-    GetPage(
-      name: Routes.cart,
-      page: () => CartView(),
-    ),
-    GetPage(
-      name: Routes.checkout,
-      page: () => CheckoutView(),
-    ),
+    GetPage(name: Routes.productDetails, page: () => ProductDetailView()),
+    GetPage(name: Routes.cart, page: () => CartView()),
+    GetPage(name: Routes.checkout, page: () => CheckoutView()),
     // Define your app routes here
   ];
-
-
 }

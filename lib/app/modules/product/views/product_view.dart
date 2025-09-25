@@ -56,6 +56,12 @@ class ProductView extends StatelessWidget {
             },
           ),
         ],
+        leading: IconButton(
+          icon: const Icon(Icons.shopping_cart),
+          onPressed: () {
+            Get.toNamed('/cart');
+          },
+        ),
       ),
       body: Obx(() {
         if (productController.isLoading.value) {
@@ -66,12 +72,21 @@ class ProductView extends StatelessWidget {
             child: Text('${'error'.tr}: ${productController.errorMessage}'),
           ); //
         }
-        return ListView.builder(
-          itemCount: productController.productList.length,
-          itemBuilder: (context, index) {
-            final product = productController.productList[index];
-            return ProductCard(product: product);
-          },
+        return Padding(
+          padding: const EdgeInsets.only(left: 16, right: 16, top: 65),
+          child: GridView.builder(
+            itemCount: productController.productList.length,
+            clipBehavior: Clip.none,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 3 / 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 100,
+            ),
+            itemBuilder: (context, index) {
+              return ProductCard(product: productController.productList[index]);
+            },
+          ),
         );
       }),
     );
