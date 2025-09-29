@@ -79,9 +79,9 @@ class ProductView extends StatelessWidget {
             clipBehavior: Clip.none,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              childAspectRatio: 3 / 2,
+              childAspectRatio: 3 / 2.8,
               crossAxisSpacing: 10,
-              mainAxisSpacing: 100,
+              mainAxisSpacing: 80,
             ),
             itemBuilder: (context, index) {
               return ProductCard(product: productController.productList[index]);

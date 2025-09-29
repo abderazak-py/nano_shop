@@ -45,8 +45,13 @@ class ProductCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      product.title.substring(0, 6),
-                      style: TextStyle(color: Colors.grey, fontSize: 16),
+                      product.title,
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 16,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      maxLines: 2,
                     ),
                     SizedBox(height: 3),
                     Row(
@@ -83,7 +88,7 @@ class ProductCard extends StatelessWidget {
           ),
           Positioned(
             right: 32,
-            top: -60,
+            top: -50,
             child: CachedNetworkImage(
               imageUrl: product.image,
               height: 100,
@@ -95,7 +100,3 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
-
-
-
-//Get.toNamed('/product-details', arguments: product);
