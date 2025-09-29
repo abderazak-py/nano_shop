@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:nano_shop/app/modules/product/models/product_model.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -41,14 +42,11 @@ class ProductDetails extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 16),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.25,
-          child: SingleChildScrollView(
-            child: Text(
-              product.description,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-            ),
-          ),
+        Text(
+          overflow: TextOverflow.ellipsis,
+          maxLines: 10,
+          product.description,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
         ),
       ],
     );
